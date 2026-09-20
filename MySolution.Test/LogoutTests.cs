@@ -1,14 +1,28 @@
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using MySolution.Core.Models.Dto;
 using MySolution.Core.PageObjects;
+using MySolution.Core.Steps;
 
 namespace MySolution.Test;
 
+[TestFixture]
+[Parallelizable(ParallelScope.Fixtures)]
+[AllureNUnit]
+[AllureFeature("Login")]
 public class LogoutTests : BaseTest
 {
-    [Test]
-    public void LoginSuccess()
+    private readonly Users User = new Users()
     {
-        LoginPage loginPage = new LoginPage(driver);
-        ProductsPage productsPage = loginPage.Login();
+        Username = "standard_user",
+        Password = "secret_sauce"
+    };
+
+    [Test]
+    public void LogoutSuccess()
+    {
+        LoginSteps loginSteps = new LoginSteps(Driver);
+        ProductsPage productsPage = loginSteps.Login(User);
         var newLoginPage = productsPage.Header.Logout();
         Assert.That(newLoginPage.IsLoginPageDisplayed(), Is.True);
     }

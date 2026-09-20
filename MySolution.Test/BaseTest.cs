@@ -1,26 +1,74 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Allure.Net.Commons;
+using log4net;
+using MySolution.Core.Helpers;
+using MySolution.Core.Models;
 using MySolution.Core.PageObjects;
+using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 
 namespace MySolution.Test;
 
 public class BaseTest
 {
-    protected IWebDriver driver;
-    
+    protected IWebDriver Driver = null!;
+    private ILog logger = LogManager.GetLogger(typeof(BaseTest));
+
     [SetUp]
     public void Setup()
     {
-        ChromeOptions options = new ChromeOptions();
-        options.AddArgument("--guest"); 
-        driver = new ChromeDriver(options);
-        new BasePage(driver).OpenSauceDemo();
-    }
+        Console.WriteLine("BaseSetup");
 
+        var settings = GetBrowserOptions();
+        Driver = WebDriverFactory.Create(settings);
+        
+        AllureApi.Step("Open Sauce Demo.", () =>
+        {
+            logger.Info("Open Sauce Demo.");
+            PageFactory.Create<LoginPage>(Driver).OpenSauceDemo();
+        });
+    }
+    
     [TearDown]
     public void TearDown()
     {
-        driver.Quit();
-        driver.Dispose();
+        Console.WriteLine("BaseTeardown");
+
+        try
+        {
+            var status = TestContext.CurrentContext.Result.Outcome.Status;
+            
+            if (status == TestStatus.Failed && Driver != null)
+            {
+                logger.Error("Test Failed: " + TestContext.CurrentContext.Result.Message);
+                byte[] screenshotBytes =
+                    ((ITakesScreenshot)Driver).GetScreenshot().AsByteArray;
+
+                AllureApi.AddAttachment(
+                    "Screenshot",
+                    "image/png",
+                    screenshotBytes);
+                LogHelper.Info("Screenshot added.");
+            }
+        }
+        finally
+        {
+            Driver?.Quit();
+            Driver?.Dispose();
+        }
+    }
+
+    private BrowserOptions GetBrowserOptions()
+    {
+        var json = File.ReadAllText("appsettings.json");
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        options.Converters.Add(new JsonStringEnumConverter());
+
+        return JsonSerializer.Deserialize<BrowserOptions>(json, options);
     }
 }
