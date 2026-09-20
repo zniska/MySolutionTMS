@@ -1,5 +1,4 @@
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 
 namespace MySolution.Core.PageObjects;
 
@@ -14,10 +13,9 @@ public class HeaderSection : BasePage
 
     public HeaderSection OpenSideMenu()
     {
+        WaitForBurgerMenu();
         _driver.FindElement(_btnBurgerMenu).Click();
-        WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-        wait.Until(e => e.FindElement(_btnLogout).Displayed);
-
+        
         return this;
     }
 
@@ -29,6 +27,18 @@ public class HeaderSection : BasePage
 
     public LoginPage Logout()
     {
-        return OpenSideMenu().ClickLogoutButton();
+        return OpenSideMenu().WaitForLogoutButton().ClickLogoutButton();
+    }
+
+    public HeaderSection WaitForBurgerMenu()
+    {
+        _wait.Until(e => e.FindElement(_btnBurgerMenu).Displayed);
+        return this;
+    }
+
+    public HeaderSection WaitForLogoutButton()
+    {
+        _wait.Until(e => e.FindElement(_btnLogout).Displayed);
+        return this;
     }
 }
