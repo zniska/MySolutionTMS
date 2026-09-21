@@ -4,5 +4,6 @@ public enum Browser
 {
     Chrome,
     Safari,
-    Firefox
+    Firefox,
+    Remote
 }
