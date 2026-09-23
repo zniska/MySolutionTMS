@@ -31,11 +31,12 @@ pipeline {
                 echo 'Start Testing'
                 dotnet test
             }
+            }
+            
         stage('Allure'){
         allure allureVersion: '3',
         includeProperties: false,
         results: [[path: 'allure-results']]
-                    }
         }
     }
 }
