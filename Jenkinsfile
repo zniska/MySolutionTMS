@@ -38,3 +38,4 @@ pipeline {
             allure([ results: [[path: 'allure-results']]])
           }
 }
+}
