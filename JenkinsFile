@@ -1,0 +1,52 @@
+pipeline {
+    agent any // Запуск на любом доступном агенте (ноде)
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10')) // Сохранять только последние 10 сборок
+        timeout(time: 1, unit: 'HOURS') // Таймаут выполнения сборки — 1 час
+    }
+
+    environment {
+        APP_NAME = 'my-application'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Получение исходного кода из репозитория...'
+                git url: 'https://github.com/zniska/MySolutionTMS', branch: 'main'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Build project'
+                dotnet restore
+                dotnet build
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Start Testing'
+                dotnet test
+            }
+        }
+    }
+
+    post {
+        always {
+            stage('Allure'){
+                allure allureVersion: '3',
+                       includeProperties: false,
+                       results: [[path: 'allure-results']]
+            }
+        }
+        success {
+            echo ''
+        }
+        failure {
+            echo ''
+        }
+    }
+}
