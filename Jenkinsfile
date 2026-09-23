@@ -21,22 +21,17 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Build project'
-                dotnet restore
-                dotnet build
+                sh 'dotnet restore'
+                sh 'dotnet build'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Start Testing'
-                dotnet test
+                sh 'dotnet test'
             }
             }
-            
-        stage('Allure'){
-        allure allureVersion: '3',
-        includeProperties: false,
-        results: [[path: 'allure-results']]
-        }
+   
     }
 }
