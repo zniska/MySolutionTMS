@@ -23,6 +23,7 @@ public static class WebDriverFactory
 
     private static IWebDriver CreateChrome(BrowserOptions browserOptions)
     {
+        LogHelper.Info($"Starting Chrome Driver for browser");
         var options = new BrowserOptionsBuilder()
             .SetHeadless(browserOptions.Headless)
             .SetMaximized(browserOptions.Maximize)
@@ -33,6 +34,8 @@ public static class WebDriverFactory
     
     private static IWebDriver CreateFirefox(BrowserOptions browserOptions)
     {
+        LogHelper.Info($"Starting Firefox Driver for browser");
+
         var options = new FirefoxOptions();
         if (browserOptions.Guest)
         {
