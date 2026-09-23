@@ -32,6 +32,12 @@ pipeline {
                 sh 'dotnet test'
             }
             }
-   
+        post{
+            always{
+                allure allureVersion: '3',
+                   includeProperties: false,
+                   results: [[path: 'allure-results']]
+            }
+        }
     }
 }
