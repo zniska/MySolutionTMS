@@ -33,16 +33,16 @@ pipeline {
                     }
                     }
              stage('Regression') {
-                    steps {
-                        sh 'dotnet test --filter "TestCategory=regression"'
-                     }
-                     }
-                   }
-                        }
+                steps {
+                    sh 'dotnet test --filter "TestCategory=regression"'
+                    }
+                    }
+                    }
+       }
+       }
     post {
         always {
             allure([ results: [[path: 'allure-results']]])
           }
-}
-}
+          }
 }
