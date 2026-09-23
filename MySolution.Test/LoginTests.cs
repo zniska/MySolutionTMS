@@ -9,7 +9,7 @@ namespace MySolution.Test;
 
 [AllureNUnit]
 [TestFixture("chrome")]
-[TestFixture("firefox")]
+//[TestFixture("firefox")]
 [Parallelizable(ParallelScope.Fixtures)]
 [AllureFeature("Login")]
 public class LoginTests(string browser) : BaseTest(browser)

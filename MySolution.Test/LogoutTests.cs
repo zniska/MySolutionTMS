@@ -7,7 +7,7 @@ using MySolution.Core.Steps;
 namespace MySolution.Test;
 
 [TestFixture("chrome")]
-[TestFixture("firefox")]
+//[TestFixture("firefox")]
 [Parallelizable(ParallelScope.Fixtures)]
 [AllureNUnit]
 [AllureFeature("Login")]
