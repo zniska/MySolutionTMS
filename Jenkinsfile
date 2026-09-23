@@ -36,11 +36,9 @@ pipeline {
 
     post {
         always {
-            stage('Allure'){
-                allure allureVersion: '3',
-                       includeProperties: false,
-                       results: [[path: 'allure-results']]
-            }
+            allure allureVersion: '3',
+            includeProperties: false,
+            results: [[path: 'allure-results']]
         }
         success {
             echo ''
