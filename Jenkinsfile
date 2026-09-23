@@ -38,16 +38,4 @@ pipeline {
                     }
         }
     }
-
-    post {
-        always {
-            
-        }
-        success {
-            echo ''
-        }
-        failure {
-            echo ''
-        }
-    }
 }
