@@ -38,7 +38,7 @@ pipeline {
             stage('Smoke') {
                 steps {
                 withEnv(["BROWSER=${params.BROWSER}"]) {
-                    sh 'dotnet test --filter "Category=Smoke"'
+                    sh 'dotnet test --filter "Category=smoke"'
                     }
                     }
                     }
