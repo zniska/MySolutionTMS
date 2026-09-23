@@ -5,12 +5,12 @@ using MySolution.Core.PageObjects.HerokuApp;
 namespace MySolution.Test;
 
 [AllureNUnit]
-public class CheckboxTests : BaseTest
+public class CheckboxTests(string browser) : BaseTest(browser)
 {
     [Test]
     public void CheckboxTest1()
     {
-        new BasePage(Driver).OpenSauceDemo("https://the-internet.herokuapp.com/checkboxes");
+        new LoginPage(Driver).OpenSauceDemo("https://the-internet.herokuapp.com/checkboxes");
         
         var checkboxPage = new CheckboxPage(Driver);
         
@@ -26,7 +26,7 @@ public class CheckboxTests : BaseTest
     [Test]
     public void HoverTest()
     {
-        new BasePage(Driver).OpenSauceDemo("https://the-internet.herokuapp.com/hovers");
+        new LoginPage(Driver).OpenSauceDemo("https://the-internet.herokuapp.com/hovers");
         var checkboxPage = new CheckboxPage(Driver);
         checkboxPage.HoverFirst();
         

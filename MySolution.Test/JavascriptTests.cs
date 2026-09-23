@@ -1,16 +1,8 @@
 namespace MySolution.Test;
 
 [Parallelizable(ParallelScope.Children)]
-[TestFixture("JavascriptTest")]
-public class JavascriptTests : BaseTest
+public class JavascriptTests(string browser) : BaseTest(browser)
 {
-    private readonly string _name;
-    
-    public JavascriptTests(string name)
-    {
-        _name = name;
-    }
-
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
@@ -20,7 +12,6 @@ public class JavascriptTests : BaseTest
     [SetUp]
     public void Setup()
     {
-        Console.WriteLine($"Running test: {_name}");
         Console.WriteLine("TestSetup");
     }
     /*

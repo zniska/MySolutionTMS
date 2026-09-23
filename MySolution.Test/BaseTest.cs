@@ -3,17 +3,24 @@ using System.Text.Json.Serialization;
 using Allure.Net.Commons;
 using log4net;
 using MySolution.Core.Helpers;
-using MySolution.Core.Models;
 using MySolution.Core.PageObjects;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 
 namespace MySolution.Test;
 
+[TestFixture("chrome")]
+[TestFixture("firefox")]
 public class BaseTest
 {
+    private string _browser;
     protected IWebDriver Driver = null!;
     private ILog logger = LogManager.GetLogger(typeof(BaseTest));
+
+    public BaseTest(string browser)
+    {
+        _browser = browser;
+    }
 
     [SetUp]
     public void Setup()
@@ -21,6 +28,7 @@ public class BaseTest
         Console.WriteLine("BaseSetup");
 
         var settings = GetBrowserOptions();
+        settings.BrowserToRun = _browser;
         Driver = WebDriverFactory.Create(settings);
         
         AllureApi.Step("Open Sauce Demo.", () =>

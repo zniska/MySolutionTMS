@@ -4,24 +4,13 @@ using Allure.NUnit;
 
 namespace MySolution.Test;
 
-[TestFixture("name", 3)]
 [Parallelizable(ParallelScope.All)]
 [AllureNUnit]
-public class NUnitTests2 : BaseTest
+public class NUnitTests2(string browser) : BaseTest(browser)
 {
-    private string name;
-    private int age;
-    
-    public NUnitTests2(string testName, int testAge)
-    {
-        name = testName;
-        age = testAge;
-    }
-    
     [SetUp]
     public void Setup()
     {
-        Console.WriteLine($"{name} started. Age  is {age}");
     }
     
     [Test]

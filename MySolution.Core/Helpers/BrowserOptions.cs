@@ -8,4 +8,6 @@ public class BrowserOptions
     public bool Headless { get; set; }
     public bool Maximize { get; set; }
     public bool Guest { get; set; }
+    public string RemoteRunUrl { get; set; }
+    public string BrowserToRun { get; set; }
 }

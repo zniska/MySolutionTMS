@@ -1,11 +1,10 @@
 using System.Text.Json;
-using Allure.NUnit;
 using MySolution.Core.Models;
 
 namespace MySolution.Test;
 
 [TestFixture]
-public class NUnitTests : BaseTest
+public class NUnitTests(string browser) : BaseTest(browser)
 {
     
     private static UserData[] testData =

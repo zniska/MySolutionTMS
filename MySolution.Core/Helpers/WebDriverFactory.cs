@@ -56,19 +56,28 @@ public static class WebDriverFactory
 
     private static IWebDriver CreateRemote(BrowserOptions browserOptions)
     {
-        var options = new ChromeOptions();
-        if (browserOptions.Guest)
+        DriverOptions options;
+
+        switch (browserOptions.
+                BrowserToRun?.ToLower())
         {
-            options.AddArgument("--guest");
+            case "firefox":
+                var firefoxOptions = new FirefoxOptions();
+                if (browserOptions.Guest) firefoxOptions.AddArgument("--guest");
+                options = firefoxOptions;
+                break;
+            default:
+                var chromeOptions = new ChromeOptions();
+                if (browserOptions.Guest) chromeOptions.AddArgument("--guest");
+                if (browserOptions.Maximize) chromeOptions.AddArgument("--start-maximized");
+                options = chromeOptions;
+                break;
         }
 
-        if (browserOptions.Maximize)
-        {
-            options.AddArgument("--start-maximized");
-        }
-        
+        LogHelper.Info($"Starting remote WebDriver for browser: {browserOptions.BrowserToRun}");
+
         return new RemoteWebDriver(
-            new Uri("http://selenium:4444"),
-            options);
+            new Uri(browserOptions.RemoteRunUrl),
+            options.ToCapabilities());
     }
 }

@@ -3,7 +3,7 @@ using MySolution.Core.PageObjects.HerokuApp;
 
 namespace MySolution.Test;
 
-public class NestedFrameTests : BaseTest
+public class NestedFrameTests(string browser) : BaseTest(browser)
 {
     [Test]
     public void NestedFrame()

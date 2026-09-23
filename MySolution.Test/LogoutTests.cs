@@ -6,11 +6,12 @@ using MySolution.Core.Steps;
 
 namespace MySolution.Test;
 
-[TestFixture]
+[TestFixture("chrome")]
+[TestFixture("firefox")]
 [Parallelizable(ParallelScope.Fixtures)]
 [AllureNUnit]
 [AllureFeature("Login")]
-public class LogoutTests : BaseTest
+public class LogoutTests(string browser) : BaseTest(browser)
 {
     private readonly Users User = new Users()
     {
