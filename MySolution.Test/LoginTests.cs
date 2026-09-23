@@ -22,7 +22,7 @@ public class LoginTests(string browser) : BaseTest(browser)
         
     [Test]
     [AllureName("Successfully logged in")]
-    [AllureTag("smoke")]
+    [Category("smoke")]
     [AllureSeverity(SeverityLevel.critical)]
     [AllureDescription("The test logins with valid username and checks that cart icon is displayed.")]
     public void LoginSuccess()
@@ -37,7 +37,7 @@ public class LoginTests(string browser) : BaseTest(browser)
     
     [Test]
     [AllureName("Login with locked user")]
-    [AllureTag("regression")]
+    [Category("regression")]
     [AllureSeverity(SeverityLevel.minor)]
     public void LoginLockedUser()
     {

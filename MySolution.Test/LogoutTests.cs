@@ -20,6 +20,7 @@ public class LogoutTests(string browser) : BaseTest(browser)
     };
 
     [Test]
+    [Category("smoke")]
     public void LogoutSuccess()
     {
         LoginSteps loginSteps = new LoginSteps(Driver);
