@@ -23,6 +23,8 @@ public class BrowserOptionsBuilder
             _options.AddArgument("--headless");
             _options.AddArgument("--no-sandbox");
             _options.AddArgument("--disable-dev-shm-usage");
+            _options.BinaryLocation = "/usr/bin/chromium";
+
         }
 
         return this;

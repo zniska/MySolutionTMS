@@ -43,7 +43,7 @@ public static class WebDriverFactory
         {
             options.AddArgument("--start-maximized");
         }
-
+        options.BinaryLocation = "/usr/bin/firefox";
         options.AddArgument("--no-sandbox");
         options.AddArgument("--disable-dev-shm-usage");
         return new FirefoxDriver(options);
@@ -65,6 +65,7 @@ public static class WebDriverFactory
         {
             case "firefox":
                 var firefoxOptions = new FirefoxOptions();
+                firefoxOptions.BinaryLocation = "/usr/bin/firefox";
                 if (browserOptions.Guest) firefoxOptions.AddArgument("--guest");
                 if (browserOptions.Headless) firefoxOptions.AddArgument("--headless");
                 firefoxOptions.AddArgument("--no-sandbox");
@@ -73,6 +74,7 @@ public static class WebDriverFactory
                 break;
             default:
                 var chromeOptions = new ChromeOptions();
+                chromeOptions.BinaryLocation = "/usr/bin/chromium";
                 chromeOptions.AddArgument("--no-sandbox");
                 chromeOptions.AddArgument("--disable-dev-shm-usage");
                 if (browserOptions.Guest) chromeOptions.AddArgument("--guest");
