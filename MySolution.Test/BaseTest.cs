@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using Allure.Net.Commons;
 using log4net;
 using MySolution.Core.Helpers;
+using MySolution.Core.Models;
 using MySolution.Core.PageObjects;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
@@ -28,6 +29,10 @@ public class BaseTest
         Console.WriteLine("BaseSetup");
 
         var settings = GetBrowserOptions();
+        settings.Browser = Enum.Parse<Browser>(
+            Environment.GetEnvironmentVariable("BROWSER")!
+        );
+        
         settings.BrowserToRun = _browser;
         Driver = WebDriverFactory.Create(settings);
         
