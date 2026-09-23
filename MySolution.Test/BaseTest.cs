@@ -29,9 +29,12 @@ public class BaseTest
         Console.WriteLine("BaseSetup");
 
         var settings = GetBrowserOptions();
-        settings.Browser = Enum.Parse<Browser>(
-            Environment.GetEnvironmentVariable("BROWSER")!
-        );
+
+        var browser = Environment.GetEnvironmentVariable("BROWSER");
+        if (browser != null)
+        {
+            settings.Browser = Enum.Parse<Browser>(browser);
+        }
         
         settings.BrowserToRun = _browser;
         Driver = WebDriverFactory.Create(settings);
