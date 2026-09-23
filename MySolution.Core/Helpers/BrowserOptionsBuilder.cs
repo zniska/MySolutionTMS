@@ -21,6 +21,8 @@ public class BrowserOptionsBuilder
         if (isHeadless)
         {
             _options.AddArgument("--headless");
+            _options.AddArgument("--no-sandbox");
+            _options.AddArgument("--disable-dev-shm-usage");
         }
 
         return this;
