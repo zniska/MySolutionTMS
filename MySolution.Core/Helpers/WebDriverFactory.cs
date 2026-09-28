@@ -63,8 +63,7 @@ public static class WebDriverFactory
     {
         DriverOptions options;
 
-        switch (browserOptions.
-                BrowserToRun?.ToLower())
+        switch (browserOptions.BrowserToRun?.ToLower())
         {
             case "firefox":
                 var firefoxOptions = new FirefoxOptions();

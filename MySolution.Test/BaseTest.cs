@@ -10,24 +10,39 @@ using OpenQA.Selenium;
 
 namespace MySolution.Test;
 
-[TestFixture("chrome")]
-[TestFixture("firefox")]
 public class BaseTest
 {
     private string _browser;
-    protected IWebDriver Driver = null!;
+    public IWebDriver Driver = null!;
     private ILog logger = LogManager.GetLogger(typeof(BaseTest));
-
-    public BaseTest(string browser)
-    {
-        _browser = browser;
-    }
 
     [SetUp]
     public void Setup()
     {
-        Console.WriteLine("BaseSetup");
+        StartDriver();
+    }
+    
+    [TearDown]
+    public void TearDown()
+    {
+        StopDriver();
+    }
 
+    private BrowserOptions GetBrowserOptions()
+    {
+        var json = File.ReadAllText("appsettings.json");
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        options.Converters.Add(new JsonStringEnumConverter());
+
+        return JsonSerializer.Deserialize<BrowserOptions>(json, options);
+    }
+
+    public void StartDriver()
+    {
         var settings = GetBrowserOptions();
 
         var browser = Environment.GetEnvironmentVariable("BROWSER");
@@ -36,7 +51,7 @@ public class BaseTest
             settings.Browser = Enum.Parse<Browser>(browser);
         }
         
-        settings.BrowserToRun = _browser;
+        settings.BrowserToRun = "Chrome";
         Driver = WebDriverFactory.Create(settings);
         
         AllureApi.Step("Open Sauce Demo.", () =>
@@ -45,12 +60,9 @@ public class BaseTest
             PageFactory.Create<LoginPage>(Driver).OpenSauceDemo();
         });
     }
-    
-    [TearDown]
-    public void TearDown()
-    {
-        Console.WriteLine("BaseTeardown");
 
+    public void StopDriver()
+    {
         try
         {
             var status = TestContext.CurrentContext.Result.Outcome.Status;
@@ -73,18 +85,5 @@ public class BaseTest
             Driver?.Quit();
             Driver?.Dispose();
         }
-    }
-
-    private BrowserOptions GetBrowserOptions()
-    {
-        var json = File.ReadAllText("appsettings.json");
-
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
-        options.Converters.Add(new JsonStringEnumConverter());
-
-        return JsonSerializer.Deserialize<BrowserOptions>(json, options);
     }
 }

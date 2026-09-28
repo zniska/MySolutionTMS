@@ -13,14 +13,13 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Получение исходного кода из репозитория...'
                 git url: 'https://github.com/zniska/MySolutionTMS', branch: 'main'
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Build project'
+                sh 'echo "Build project"'
                 sh 'dotnet restore'
                 sh 'dotnet build'
             }

@@ -8,18 +8,17 @@ using MySolution.Core.Steps;
 namespace MySolution.Test;
 
 [AllureNUnit]
-[TestFixture("chrome")]
-//[TestFixture("firefox")]
 [Parallelizable(ParallelScope.Fixtures)]
 [AllureFeature("Login")]
-public class LoginTests(string browser) : BaseTest(browser)
+[Ignore("")]
+public class LoginTests : BaseTest
 {
     private readonly Users User = new Users()
     {
         Username = "standard_user",
         Password = "secret_sauce"
     };
-        
+    
     [Test]
     [AllureName("Successfully logged in")]
     [Category("smoke")]

@@ -31,4 +31,9 @@ public class BasePage
     {
         return _driver.Title;
     }
+
+    public void Open(string url)
+    {
+        _driver.Navigate().GoToUrl(url);
+    }
 }

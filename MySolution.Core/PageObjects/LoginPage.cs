@@ -28,8 +28,8 @@ public class LoginPage : BasePage
 
     public LoginPage SetUserName(string username)
     {
-        //new Input(_driver, _inpUsername, "Username input").SendKeys(username);
-        UserName.SendKeys(username);
+        new Input(_driver, _inpUsername, "Username input").SendKeys(username);
+        //UserName.SendKeys(username);
         return this;
     }
 
@@ -40,15 +40,15 @@ public class LoginPage : BasePage
 
     public LoginPage SetPassword(string password)
     {
-        //new UiElement(_driver, "Password input", _inpPassword).SendKeys(password);
-        Password.SendKeys(password);
+        new Input(_driver, _inpPassword, "Password input").SendKeys(password);
+        //Password.SendKeys(password);
         return this;
     }
 
     public ProductsPage ClickLoginButton()
     {
-        //new UiElement(_driver, "Login button", _btnLogin).Click();
-        LoginButton.Click();
+        new UiElement(_driver, "Login button", _btnLogin).Click();
+        //LoginButton.Click();
         return new ProductsPage(_driver);
     }
     
